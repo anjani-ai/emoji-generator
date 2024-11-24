@@ -1,1 +1,28 @@
+from flask import Flask, render_template, request, send_file
+from utils import image_to_emoji
+import os
 
+app = Flask(__name__)
+
+UPLOAD_FOLDER = "uploads/"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route("/", methods=["GET", "POST"])
+def home():
+    if request.method == "POST":
+        file = request.files["image"]
+        resolution = int(request.form.get("resolution", 50))
+        emoji_set = request.form.get("emoji_set", "default")
+        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+        file.save(filepath)
+
+        emoji_art = image_to_emoji(filepath, resolution, emoji_set)
+        with open("emoji_art.txt", "w") as f:
+            f.write(emoji_art)
+
+        return send_file("emoji_art.txt", as_attachment=True)
+
+    return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
