@@ -1,0 +1,21 @@
+from PIL import Image
+import numpy as np
+
+# Define emoji sets
+EMOJI_SETS = {
+    "default": ["🌑", "🌒", "🌓", "🌔", "🌕"],
+    "smileys": ["😀", "😊", "😐", "😢", "😭"],
+    "animals": ["🐾", "🦄", "🐍", "🐱", "🐘"],
+}
+
+def image_to_emoji(image_path, resolution=50, emoji_set="default"):
+    img = Image.open(image_path).convert("L")
+    img = img.resize((resolution, resolution))
+    emojis = EMOJI_SETS.get(emoji_set, EMOJI_SETS["default"])
+    pixels = np.array(img)
+
+    emoji_art = "\n".join(
+        "".join(emojis[pixel // (256 // len(emojis))] for pixel in row)
+        for row in pixels
+    )
+    return emoji_art
