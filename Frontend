@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Art Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Emoji Art Generator</h1>
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <label for="image">Upload your image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <label for="resolution">Resolution (10-100):</label>
+            <input type="number" id="resolution" name="resolution" min="10" max="100" value="50">
+            <label for="emoji_set">Emoji Set:</label>
+            <select id="emoji_set" name="emoji_set">
+                <option value="default">Default</option>
+                <option value="smileys">Smileys</option>
+                <option value="animals">Animals</option>
+            </select>
+            <button type="submit">Generate Emoji Art</button>
+        </form>
+    </div>
+</body>
+</html>
